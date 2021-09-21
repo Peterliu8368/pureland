@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose')
-const user = mongoose.model("User")
+const User = mongoose.model("User")
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
 const {JWT_SECRET} = require('../keys')
@@ -12,14 +12,14 @@ router.post('/signup', (req, res)=>{
     if (!email || !password || !name){
         return res.status(422).json({error:"Please add all the fields"})
     }
-    user.find({email: email})
+    User.find({email: email})
         .then(savedUser=>{
             if(savedUser.length > 0){
                 return res.status(422).json({error:"User already exists with that email"})
             }
             bcrypt.hash(password, 12)
                 .then(hashedPassword=>{
-                    user.create({...req.body, password: hashedPassword})
+                    User.create({...req.body, password: hashedPassword})
                     .then(user => res.json({message: "Saved successfully"}))
                     .catch(err=>console.log(err))
                 })
@@ -32,7 +32,7 @@ router.post('/signin', (req, res)=>{
     if (!email || !password) {
         res.status(422).json({message: "Please provide add email or password."})
     }
-    user.find({email})
+    User.find({email})
         .then(savedUser=>{
             if(savedUser.length === 0){
                 return res.status(422).json({error: "Invalid email or password"})
