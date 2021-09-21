@@ -18,10 +18,10 @@ app.use(require('./routes/auth'));
 //connect to mongo db
 mongoose.connect(MONGOURL);
 mongoose.connection.on('connected', ()=> {
-    console.log('connected to mongo db hurray');
+    console.log('Connected to mongo db hurray');
 })
 mongoose.connection.on('error', (err)=> {
-    console.log('error connecting', err);
+    console.log('Error connecting', err);
 })
 
 
