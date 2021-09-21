@@ -4,17 +4,6 @@ const PORT = 5000;
 const mongoose = require("mongoose");
 const {MONGOURL} = require('./keys.js')
 
-//get mongodb model
-require('./models/user.model');
-
-//body parser
-app.use(express.json())
-
-
-//use router
-app.use(require('./routes/auth'));
-
-
 //connect to mongo db
 mongoose.connect(MONGOURL);
 mongoose.connection.on('connected', ()=> {
@@ -23,6 +12,15 @@ mongoose.connection.on('connected', ()=> {
 mongoose.connection.on('error', (err)=> {
     console.log('Error connecting', err);
 })
+
+//get mongodb model
+require('./models/user.model');
+require('./models/post.model');
+//body parser
+app.use(express.json())
+//use router
+app.use(require('./routes/auth.routes'));
+app.use(require('./routes/post.routes'));
 
 
 app.listen(PORT, () => {
