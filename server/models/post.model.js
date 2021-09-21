@@ -18,7 +18,8 @@ const postSchema = new mongoose.Schema({
     //postedBy will be related to a User model, the filled with the objectID
     postedBy: {
         type: ObjectId,
-        ref: "User"
+        ref: "User",
+        required: [true, "{PATH} is required"]
     }
 })
 
