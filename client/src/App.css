@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Sirin+Stencil&display=swap');
+a {
+  color: black !important;
+  font-family: 'Sirin Stencil', cursive
+}
+
+* {
+  font-family:'Roboto', sans-serif;
+}
+
+
+.brand-logo, h5 {
+  font-family: 'Sirin Stencil', cursive;
+}
+
+.mycard {
+  margin-top: 30px;
+}
+
+.auth-card {
+  padding: 20px;
+  text-align: center;
+  width: 35vw;
+  max-width: 450px;
+  margin: 2rem auto;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.item {
+  width: 30%;
+  border-radius: 1rem;
+}
