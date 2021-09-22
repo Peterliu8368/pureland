@@ -1,3 +1,4 @@
+const { urlencoded } = require("express");
 const express = require("express");
 const app = express();
 const PORT = 5000;
@@ -18,6 +19,7 @@ require('./models/user.model');
 require('./models/post.model');
 //body parser
 app.use(express.json())
+app.use(urlencoded({extended: true}))
 //use router
 app.use(require('./routes/auth.routes'));
 app.use(require('./routes/post.routes'));
