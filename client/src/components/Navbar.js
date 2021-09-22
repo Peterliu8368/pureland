@@ -1,16 +1,35 @@
-import React from "react";
+import React, { useContext} from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../App";
 
 const Navbar=()=>{
+    const {state, dispatch} = useContext(UserContext)
+    
+    const renderList = () =>{
+        if(state) {
+            return (
+                [<li><Link style={{fontSize: 22}} to="/profile">Profile</Link></li>,
+                <li><Link style={{fontSize: 22}} to="/create">Create Post</Link></li>,
+                <li><button onClick={()=>{
+                    localStorage.clear()
+                    dispatch({"type": "CLEAR"})
+                }} className="btn waves-effect waves-light #ef5350 red lighten-1">Logout
+                </button></li>]
+            )
+        } else {
+            return ([
+                <li><Link style={{fontSize: 22}} to="/login">Login</Link></li>,
+                <li><Link style={{fontSize: 22}} to="/signup">Signup</Link></li>
+            ])
+        }
+    }
+
     return (
         <nav>
             <div className="nav-wrapper white">
-                <Link style={{marginLeft:"3rem"}} to="/" className="brand-logo left">Pureland</Link>
+                <Link style={{marginLeft:"3rem", fontSize: 35}} to={state?"/":"/login"} className="brand-logo left">Pureland</Link>
                 <ul style={{marginRight:"2rem"}} id="nav-mobile" className="right">
-                    <li><Link to="/login">Login</Link></li>
-                    <li><Link to="/signup">Signup</Link></li>
-                    <li><Link to="/profile">Profile</Link></li>
-                    <li><Link to="/create">Create Post</Link></li>
+                    {renderList()}
                 </ul>
             </div>
         </nav>
