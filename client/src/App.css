@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&family=Sirin+Stencil&display=swap');
 a {
   color: black !important;
-  font-family: 'Sirin Stencil', cursive
+  font-family: 'Sirin Stencil', cursive;
+  
+}
+
+li {
+  font-size: larger;
 }
 
 * {
@@ -36,6 +41,11 @@ a {
   border-radius: 1rem;
 }
 
+.userName {
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
+
 .home {
   
 }
@@ -46,7 +56,7 @@ a {
   margin: 26px auto;
 }
 
-#toast-container {
+#toasts-container {
   top: 2rem !important;
   right: 3rem !important;
   left: auto !important;

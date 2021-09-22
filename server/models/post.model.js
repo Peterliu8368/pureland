@@ -13,7 +13,7 @@ const postSchema = new mongoose.Schema({
     },
     photoUrl:{
         type: String,
-        default: "no photo"
+        required: [true, "{PATH} is required"]
     },
     //postedBy will be related to a User model, the filled with the objectID
     postedBy: {

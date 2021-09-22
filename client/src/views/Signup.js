@@ -47,7 +47,7 @@ const Signup = () => {
                 <button onClick={createUser} style={{marginTop:"2rem"}} className="btn waves-effect waves-light #26a69a teal lighten-1" type="submit">Signup
                 </button>
                 <p>
-                    <Link style={{fontFamily: 'roboto', textDecoration:"underline"}} to="/signin">Already have an account?</Link>
+                    <Link style={{fontFamily: 'roboto', textDecoration:"underline"}} to="/login">Already have an account?</Link>
                 </p>
             </div>
         </div>
