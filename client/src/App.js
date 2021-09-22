@@ -1,18 +1,32 @@
 import Navbar from "./components/Navbar";
 import style from "./App.css"
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Profile from "./views/Profile";
 import Signup from "./views/Signup";
 import CreatePost from "./views/CreatePost";
+import {useEffect, createContext, useReducer, useContext} from 'react'
+import {reducer, initialState} from './reducers/userReducer'
 
-function App() {
+export const UserContext = createContext()
+
+const Routing = () => {
+  const {state, dispatch} = useContext(UserContext)
+  const history = useHistory()
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("user"))
+    console.log(user);
+    if (user) {
+      dispatch({type: "USER", payload: user})
+      history.push('/')
+    } else {
+      history.push('/login')
+    }
+  }, [state])
+
   return (
-    <>
-      <Navbar />
-
-      <Switch>
+    <Switch>
         <Route exact path='/'>
           <Home />
         </Route>
@@ -33,7 +47,16 @@ function App() {
           <CreatePost />
         </Route>
       </Switch>
-    </>
+  )
+}
+
+function App() {
+  const [state, dispatch] = useReducer(reducer, initialState)
+  return (
+    <UserContext.Provider value={{state,dispatch}}>
+      <Navbar />
+      <Routing />
+    </UserContext.Provider>
   );
 }
 
