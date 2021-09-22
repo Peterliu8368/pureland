@@ -20,7 +20,7 @@ router.post('/signup', (req, res)=>{
             bcrypt.hash(password, 12)
                 .then(hashedPassword=>{
                     User.create({...req.body, password: hashedPassword})
-                    .then(user => res.json({message: "Saved successfully"}))
+                    .then(user => res.json({message: "Successfully created user "}))
                     .catch(err=>console.log(err))
                 })
         }).
@@ -43,7 +43,8 @@ router.post('/signin', (req, res)=>{
                         // res.json({message: "Successfully signed-in"})
                         const user_id = savedUser[0]._id
                         const token = jwt.sign({_id: user_id}, JWT_SECRET)
-                        res.json({token})
+                        const {_id, name, email} = savedUser[0]
+                        res.json({token, user: {_id, name, email}})
                     } else {
                         return res.status(422).json({error: "Invalid email or password"})
                     }
