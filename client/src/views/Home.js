@@ -1,7 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import { UserContext } from '../App'
 
 const Home = () => {
     const [data, setData] = useState([])
+    const {state, dispatch} = useContext(UserContext)
+
     useEffect(()=> {
         fetch('/allpost', {
             headers: {
@@ -9,9 +12,61 @@ const Home = () => {
             }
         }).then(res=>res.json())
         .then(result=>{
+            console.log(result);
             setData(result.posts)
         })
     }, [])
+    if (!data) {
+        return 'loading...'
+    }
+
+    const likePost = (id) =>{
+        fetch('/like', {
+            method:'put',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('jwt')
+            },
+            body: JSON.stringify({
+                postId: id
+            })
+        }).then(res=>res.json())
+        .then(result=>{
+            // console.log(result);
+            const newData = data.map(item=>{
+                if (item._id === result._id){
+                    return result
+                } else {
+                    return item
+                }
+            })
+            setData(newData);
+        }).catch(err => console.log(err))
+    }
+
+    const unLikePost = (id) =>{
+        fetch('/unlike', {
+            method:'put',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('jwt')
+            },
+            body: JSON.stringify({
+                postId: id
+            })
+        }).then(res=>res.json())
+        .then(result=>{
+            // console.log(result);
+            const newData = data.map(item=>{
+                if (item._id === result._id){
+                    return result
+                } else {
+                    return item
+                }
+            })
+            setData(newData);
+        }).catch(err => console.log(err))
+    }
 
     return (
         <div className="home">
@@ -21,12 +76,22 @@ const Home = () => {
                         <div key={item._id} className="card home-card">
                             <h5 className="userName">{item.postedBy.name}</h5>
                             <div className="card-image">
-                                <img src={item.photoUrl} alt="maclaren" />
+                                <img src={item.photoUrl} alt="" />
                             </div>
                             <div className="card-content">
-                                <i style={{color:'red'}} className="material-icons">favorite</i>
-                                <h6>Title</h6>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate porro placeat, molestias ea veniam maxime adipisci harum vero non blanditiis architecto sequi, vel accusantium fugit. Est expedita omnis aspernatur unde.</p>
+                                {item.likes.includes(state._id)?
+                                    <i style={{cursor: 'pointer', color:'red'}} onClick={() => {
+                                        unLikePost(item._id)
+                                    }} className="material-icons">favorite</i> :
+
+                                    <i style={{cursor: 'pointer'}} onClick={() => {
+                                        likePost(item._id)
+                                    }} className="material-icons">favorite_border</i>
+                                }
+                                
+                                <h6>{item.likes.length} likes</h6>
+                                <h6>{item.title}</h6>
+                                <p>{item.body}</p>
                                 <input type="text" placeholder="add a comment" />
                             </div>
                         </div>
