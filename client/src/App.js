@@ -8,6 +8,7 @@ import Signup from "./views/Signup";
 import CreatePost from "./views/CreatePost";
 import {useEffect, createContext, useReducer, useContext} from 'react'
 import {reducer, initialState} from './reducers/userReducer'
+import UserProfile from "./views/UserProfile"
 
 export const UserContext = createContext()
 
@@ -36,6 +37,10 @@ const Routing = () => {
 
         <Route exact path='/login'>
           <Login />
+        </Route>
+
+        <Route exact path='/profile/:userId'>
+          <UserProfile />
         </Route>
 
         <Route exact path='/profile'>
