@@ -118,7 +118,6 @@ const Home = () => {
                                 }
                                 
                                 <h6>{item.likes.length} likes</h6>
-                                <h6>{item.title}</h6>
                                 <p>{item.body}</p>
                                 {
                                     item.comments.map((record, i)=>{

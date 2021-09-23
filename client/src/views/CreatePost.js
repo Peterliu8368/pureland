@@ -3,7 +3,6 @@ import M from 'materialize-css'
 import {useHistory} from 'react-router-dom'
 
 const CreatePost = () => {
-    const[title, setTitle] = useState("");
     const[body, setBody] = useState("");
     const[image, setImage] = useState("");
     const[url, setUrl] = useState("");
@@ -19,7 +18,6 @@ const CreatePost = () => {
                     "Authorization": "Bearer " + localStorage.getItem("jwt")
                 },
                 body:JSON.stringify({
-                    title,
                     body,
                     photoUrl: url
                 })
@@ -63,7 +61,7 @@ const CreatePost = () => {
             padding: 20,
             textAlign: "center"
         }}>
-            <input type="text" placeholder="Title" value={title} onChange={e=>setTitle(e.target.value)}/>
+            
             <input type="text" placeholder="Body" value={body} onChange={e=>setBody(e.target.value)}/>
             <div className="file-field input-field">
                 <div className="btn">
