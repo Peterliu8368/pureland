@@ -6,7 +6,7 @@ const Post = mongoose.model("Post");
 
 router.get('/allpost', requireLogin, (req, res)=>{
     Post.find()
-    .populate('postedBy', "_id name")
+    .populate('postedBy', "_id name pic")
     .populate('comments.postedBy', '_id name')
         .then(posts=>{
             res.json({posts})
@@ -16,7 +16,7 @@ router.get('/allpost', requireLogin, (req, res)=>{
 
 router.get('/getSubpost', requireLogin, (req, res)=>{
     Post.find({postedBy: {$in: req.user.following}})
-    .populate('postedBy', "_id name")
+    .populate('postedBy', "_id name pic")
     .populate('comments.postedBy', '_id name')
         .then(posts=>{
             res.json({posts})
@@ -108,19 +108,6 @@ router.delete('/deletepost/:postId',requireLogin, (req, res)=>{
         .then(result=>{
             res.json({message: "Successfully deleted", result})
         }).catch(err=>console.log(err))
-    // Post.findOne({_id: req.params.postId})
-    //     .populate()
-    //     .exec((err, post)=>{
-    //         console.log("the posts we are getting back from delete",post);
-    //         if(err || !post){
-    //             return res.status(422).json({error: err})
-    //         }
-    //         if(post.postedBy._id.toString() === req.user._id.toString()){
-    //             Post.remove()
-    //             .then(result=>{
-    //                 res.json({message: "Successfully deleted", result})
-    //             }).catch(err=>console.log(err))
-    //         }
-    //     })
+    
 })
 module.exports = router

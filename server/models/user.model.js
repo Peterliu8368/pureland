@@ -15,7 +15,11 @@ const userSchema = new mongoose.Schema({
         required: [true, "{PATH} is required"]
     },
     followers:[{type: ObjectId, ref:"User"}],
-    following:[{type: ObjectId, ref:"User"}]
+    following:[{type: ObjectId, ref:"User"}],
+    pic: {
+        type: String,
+        default: "https://res.cloudinary.com/pureland-images/image/upload/v1632432713/138-1387631_login-comments-windows-10-person-icon_cbjsiw.jpg"
+    }
 })
 
 mongoose.model("User", userSchema)

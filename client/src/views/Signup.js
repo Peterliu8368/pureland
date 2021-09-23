@@ -1,13 +1,41 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from "react-router-dom";
 import M from 'materialize-css'
 const Signup = () => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [image, setImage] = useState('')
+    const [url, setUrl] = useState('')
     const history = useHistory();
 
-    const createUser= () => {
+    useEffect(()=>{
+        if(url) {
+            uploadFields()
+        }
+    }, [url])
+
+    const postPics =() => {
+        //upload user profile image to cloud
+        const data = new FormData()
+        data.append('file', image)
+        data.append('upload_preset', 'pureland')
+        data.append('cloud_name', 'pureland-images')
+        fetch("https://api.cloudinary.com/v1_1/pureland-images/image/upload", {
+            method: "post",
+            body: data
+        }).then(res=>res.json())
+        .then(data=>{
+            setUrl(data.secure_url);
+            console.log(data);
+            
+        })
+        .catch(err=>console.log(err))
+
+    }
+
+    const uploadFields = () =>{
+        //email valid
         if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
             return M.toast({html: "Invalid email", classes:"#b71c1c red darken-4"})
         }
@@ -22,7 +50,8 @@ const Signup = () => {
             body:JSON.stringify({
                 name,
                 email,
-                password
+                password,
+                pic:url
             })
         }).then(res=>res.json())
         .then(data=>{
@@ -35,6 +64,16 @@ const Signup = () => {
             }
         })
         .catch(err=>console.log(err))
+
+    }
+
+
+    const createUser= () => {
+        if(image){
+            postPics()
+        } else {
+            uploadFields()
+        }
     }
 
     return (
@@ -44,6 +83,16 @@ const Signup = () => {
                 <input type="text" placeholder="name" value={name} onChange={e=>setName(e.target.value)}/>
                 <input type="text" placeholder="email" value={email} onChange={e=>setEmail(e.target.value)}/>
                 <input type="password" placeholder="password" value={password} onChange={e=>setPassword(e.target.value)}/>
+                <div className="file-field input-field">
+                    <div className="btn">
+                        <span>Profile Pic</span>
+                        <input type="file" onChange={e=>setImage(e.target.files[0])}/>
+                    </div>
+                    <div className="file-path-wrapper">
+                        <input className="file-path validate" type="text" />
+                    </div>
+                </div>
+
                 <button onClick={createUser} style={{marginTop:"2rem"}} className="btn waves-effect waves-light #26a69a teal lighten-1" type="submit">Signup
                 </button>
                 <p>
