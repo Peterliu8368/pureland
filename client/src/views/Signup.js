@@ -51,7 +51,7 @@ const Signup = () => {
                 name,
                 email,
                 password,
-                pic:url
+                pic:url?url:"https://res.cloudinary.com/pureland-images/image/upload/v1632432713/138-1387631_login-comments-windows-10-person-icon_cbjsiw.jpg"
             })
         }).then(res=>res.json())
         .then(data=>{

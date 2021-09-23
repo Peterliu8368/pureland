@@ -88,7 +88,7 @@ const Profile = () => {
                     <div>
                         <img style={{width:160, height:160, borderRadius:80}} src={userProfile?.user.pic} alt="profile-pic" />
                     </div>
-                    <div>
+                    <div style={{display: 'flex', flexDirection:"column", alignItems:'start', justifyContent:'center'}}>
                         <h4>
                             {userProfile?.user?.name}
                             {
@@ -98,7 +98,6 @@ const Profile = () => {
                                 <i style={{cursor: 'pointer', color:'red', marginLeft:10}} onClick={unfollowUser} className="material-icons">remove_circle</i>
                             }
                         </h4>
-                        <h5>{userProfile?.user?.email}</h5>
                         <div style={{display: 'flex', justifyContent:'space-between', width:"117%"}}>
                             <h6>{userProfile?.posts?.length} posts</h6>
                             <h6>{userProfile?.user.followers.length || 0} followers</h6>
