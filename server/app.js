@@ -23,6 +23,7 @@ app.use(urlencoded({extended: true}))
 //use router
 app.use(require('./routes/auth.routes'));
 app.use(require('./routes/post.routes'));
+app.use(require('./routes/user.routes'));
 
 
 app.listen(PORT, () => {
