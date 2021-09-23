@@ -70,7 +70,7 @@ router.put('/unlike', requireLogin, (req, res)=> {
     })
 })
 
-router.put('/like', requireLogin, (req, res)=> {
+router.put('/comment', requireLogin, (req, res)=> {
     const comment = {
         text: req.body.text,
         postedBy: req.user._id
