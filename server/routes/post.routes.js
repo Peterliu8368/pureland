@@ -14,6 +14,16 @@ router.get('/allpost', requireLogin, (req, res)=>{
         .catch(err=> console.log(err))
 })
 
+router.get('/getSubpost', requireLogin, (req, res)=>{
+    Post.find({postedBy: {$in: req.user.following}})
+    .populate('postedBy', "_id name")
+    .populate('comments.postedBy', '_id name')
+        .then(posts=>{
+            res.json({posts})
+        })
+        .catch(err=> console.log(err))
+})
+
 router.post('/createpost', requireLogin, (req, res)=>{
     const {body, photoUrl} = req.body;
     if (!body || !photoUrl){
@@ -92,18 +102,23 @@ router.put('/comment', requireLogin, (req, res)=> {
 })
 
 router.delete('/deletepost/:postId',requireLogin, (req, res)=>{
-    Post.findOne({_id: req.params.postId})
-        .populate('postedBy', "_id")
-        .exec((err, post)=>{
-            if(err || !post){
-                return res.status(422).json({error: err})
-            }
-            if(post.postedBy._id.toString() === req.user._id.toString()){
-                Post.remove()
-                .then(result=>{
-                    res.json({message: "Successfully deleted"})
-                }).catch(err=>console.log(err))
-            }
-        })
+    Post.findByIdAndDelete(req.params.postId)
+        .then(result=>{
+            res.json({message: "Successfully deleted", result})
+        }).catch(err=>console.log(err))
+    // Post.findOne({_id: req.params.postId})
+    //     .populate()
+    //     .exec((err, post)=>{
+    //         console.log("the posts we are getting back from delete",post);
+    //         if(err || !post){
+    //             return res.status(422).json({error: err})
+    //         }
+    //         if(post.postedBy._id.toString() === req.user._id.toString()){
+    //             Post.remove()
+    //             .then(result=>{
+    //                 res.json({message: "Successfully deleted", result})
+    //             }).catch(err=>console.log(err))
+    //         }
+    //     })
 })
 module.exports = router
