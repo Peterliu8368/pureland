@@ -107,18 +107,20 @@ const Home = () => {
                                 <img src={item.photoUrl} alt="" />
                             </div>
                             <div className="card-content">
-                                {item.likes.includes(state._id)?
-                                    <i style={{cursor: 'pointer', color:'red'}} onClick={() => {
-                                        unLikePost(item._id)
-                                    }} className="material-icons">favorite</i> :
+                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                    {item.likes.includes(state._id)?
+                                        <i style={{cursor: 'pointer', color:'red'}} onClick={() => {
+                                            unLikePost(item._id)
+                                        }} className="material-icons">favorite</i> :
 
-                                    <i style={{cursor: 'pointer'}} onClick={() => {
-                                        likePost(item._id)
-                                    }} className="material-icons">favorite_border</i>
-                                }
-                                
-                                <h6>{item.likes.length} likes</h6>
-                                <p>{item.body}</p>
+                                        <i style={{cursor: 'pointer'}} onClick={() => {
+                                            likePost(item._id)
+                                        }} className="material-icons">favorite_border</i>
+                                    }
+                                    
+                                    <span style={{marginLeft: "1rem"}}>{item.likes.length} likes</span>
+                                </div>
+                                <h6><span style={{fontWeight: "bold"}}>{item.postedBy.name} </span>{item.body}</h6>
                                 {
                                     item.comments.map((record, i)=>{
                                         return (
