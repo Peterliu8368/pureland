@@ -135,6 +135,7 @@ const Home = () => {
                                     <input type="text" placeholder="add a comment" onChange={e=>{
                                         setComment(e.target.value)
                                         }} value={userComment}/>   
+                                    <button className="btn">Reply</button>
                                 </form>
                             </div>
                         </div>

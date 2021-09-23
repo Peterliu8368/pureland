@@ -61,8 +61,8 @@ const CreatePost = () => {
             padding: 20,
             textAlign: "center"
         }}>
-            
-            <input type="text" placeholder="Body" value={body} onChange={e=>setBody(e.target.value)}/>
+            <h5>Stay Happy</h5>
+            <input type="text" placeholder="What do you want to say?" value={body} onChange={e=>setBody(e.target.value)}/>
             <div className="file-field input-field">
                 <div className="btn">
                     <span>Upload Image</span>
