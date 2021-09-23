@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const SubscribesUserPosts = () => {
     const [data, setData] = useState([])
     const {state, dispatch} = useContext(UserContext)
-    const [userComment, setComment] = useState('')
+    
 
     useEffect(()=> {
         fetch('/getSubpost', {
@@ -86,6 +86,7 @@ const SubscribesUserPosts = () => {
         .then(result=>{
             // console.log(result);
             const newData = data.map(item=>{
+                document.getElementById(item._id).value = '';
                 if (item._id === result._id){
                     return result
                 } else {
@@ -93,7 +94,6 @@ const SubscribesUserPosts = () => {
                 }
             })
             setData(newData)
-            setComment('')
         }).catch(err => console.log(err))
     }
 
@@ -157,9 +157,7 @@ const SubscribesUserPosts = () => {
                                     e.preventDefault();
                                     makeComment(e.target[0].value, item._id);
                                 }}>
-                                    <input type="text" placeholder="add a comment" onChange={e=>{
-                                        setComment(e.target.value)
-                                        }} value={userComment}/>   
+                                    <input id={item._id} type="text" placeholder="add a comment" />   
                                     <button className="btn">Reply</button>
                                 </form>
                             </div>

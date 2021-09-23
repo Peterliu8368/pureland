@@ -4,6 +4,8 @@ import { UserContext } from '../App';
 const Profile = () => {
     const [mypics, setMypics] = useState([]);
     const {state, dispatch} = useContext(UserContext)
+    const [image, setImage] = useState('')
+    const [url, setUrl] = useState('')
 
     useEffect(() => {
         fetch('/mypost', {
@@ -17,22 +19,29 @@ const Profile = () => {
         })
     }, [])
 
-    const updatePhoto = () =>{
-        //upload user profile image to cloud
-        // const data = new FormData()
-        // data.append('file', image)
-        // data.append('upload_preset', 'pureland')
-        // data.append('cloud_name', 'pureland-images')
-        // fetch("https://api.cloudinary.com/v1_1/pureland-images/image/upload", {
-        //     method: "post",
-        //     body: data
-        // }).then(res=>res.json())
-        // .then(data=>{
-        //     setUrl(data.secure_url);
-        //     console.log(data);
-            
-        // })
-        // .catch(err=>console.log(err))
+    useEffect(() => {
+        if(image){
+            // upload user profile image to cloud
+            const data = new FormData()
+            data.append('file', image)
+            data.append('upload_preset', 'pureland')
+            data.append('cloud_name', 'pureland-images')
+            fetch("https://api.cloudinary.com/v1_1/pureland-images/image/upload", {
+                method: "post",
+                body: data
+            }).then(res=>res.json())
+            .then(data=>{
+                setUrl(data.secure_url);
+                console.log(data);
+                localStorage.setItem('user', JSON.stringify({...state, pic: data.url}))
+                dispatch({type: "UPDATEPIC", payload:data.url})
+            })
+            .catch(err=>console.log(err))
+        }
+    }, [image])
+
+    const updatePhoto = (file) =>{
+        setImage(file)
     }
 
     return (
@@ -48,8 +57,11 @@ const Profile = () => {
                     {/* update button */}
                     <div className="file-field input-field">
                         <div className="btn">
-                            <span>Profile Pic</span>
-                            <input type="file" />
+                            <span>Update Pic</span>
+                            <input type="file" onChange={e=>updatePhoto(e.target.files[0])} />
+                        </div>
+                        <div hidden className="file-path-wrapper">
+                            <input className="file-path validate" type="text" />
                         </div>
                         
                     </div>

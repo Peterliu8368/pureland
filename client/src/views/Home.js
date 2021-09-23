@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Home = () => {
     const [data, setData] = useState([])
     const {state, dispatch} = useContext(UserContext)
-    const [userComment, setComment] = useState('')
+    // const [userComment, setComment] = useState('')
 
     useEffect(()=> {
         fetch('/allpost', {
@@ -86,6 +86,7 @@ const Home = () => {
         .then(result=>{
             // console.log(result);
             const newData = data.map(item=>{
+                document.getElementById(item._id).value = '';
                 if (item._id === result._id){
                     return result
                 } else {
@@ -93,7 +94,7 @@ const Home = () => {
                 }
             })
             setData(newData)
-            setComment('')
+            // setComment('')
         }).catch(err => console.log(err))
     }
 
@@ -159,9 +160,10 @@ const Home = () => {
                                     e.preventDefault();
                                     makeComment(e.target[0].value, item._id);
                                 }}>
-                                    <input type="text" placeholder="add a comment" onChange={e=>{
+                                    <input id={item._id} type="text" placeholder="add a comment"/>   
+                                    {/* <input type="text" placeholder="add a comment" onChange={e=>{
                                         setComment(e.target.value)
-                                        }} value={userComment}/>   
+                                        }} value={userComment}/>    */}
                                     <button className="btn">Reply</button>
                                 </form>
                             </div>
