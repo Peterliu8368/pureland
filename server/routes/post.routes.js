@@ -88,7 +88,6 @@ router.put('/comment', requireLogin, (req, res)=> {
         }
         else {
             res.json(result)
-            
         }
     })
 })
