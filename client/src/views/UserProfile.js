@@ -6,7 +6,6 @@ const Profile = () => {
     const [userProfile, setProfile] = useState(null);
     const {state, dispatch} = useContext(UserContext)
     const {userId} = useParams()
-    const[showFollow, setShowfollow] = useState(true)
 
 
     useEffect(() => {
@@ -44,7 +43,6 @@ const Profile = () => {
                     }
                 }
             })
-            setShowfollow(false);
             console.log(data);
         })
     }
@@ -74,7 +72,6 @@ const Profile = () => {
                     }
                 }
             })
-            setShowfollow(true)
             console.log(data);
         })
     }
@@ -95,7 +92,7 @@ const Profile = () => {
                         <h4>
                             {userProfile?.user?.name}
                             {
-                                showFollow?
+                                !userProfile.user.followers.includes(state._id)?
                                 <i style={{cursor: 'pointer', color:'green', marginLeft:10}} onClick={followUser} className="material-icons">add_circle</i>
                                 :
                                 <i style={{cursor: 'pointer', color:'red', marginLeft:10}} onClick={unfollowUser} className="material-icons">remove_circle</i>
