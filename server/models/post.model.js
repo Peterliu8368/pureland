@@ -19,6 +19,10 @@ const postSchema = new mongoose.Schema({
         type: ObjectId,
         ref: "User",
     }],
+    comments: [{
+        text: String,
+        postedBy: {type: ObjectId, ref:"User"}
+    }],
     //postedBy will be related to a User model, the filled with the objectID
     postedBy: {
         type: ObjectId,
