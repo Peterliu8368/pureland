@@ -9,6 +9,7 @@ import CreatePost from "./views/CreatePost";
 import {useEffect, createContext, useReducer, useContext} from 'react'
 import {reducer, initialState} from './reducers/userReducer'
 import UserProfile from "./views/UserProfile"
+import SubscribesUserPosts from "./views/SubscribesUserPosts"
 
 export const UserContext = createContext()
 
@@ -49,6 +50,10 @@ const Routing = () => {
 
         <Route exact path='/create'>
           <CreatePost />
+        </Route>
+
+        <Route exact path='/followingpost'>
+          <SubscribesUserPosts />
         </Route>
       </Switch>
   )

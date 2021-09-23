@@ -2,19 +2,19 @@ import React, {useState, useEffect, useContext} from 'react'
 import { UserContext } from '../App'
 import { Link } from "react-router-dom";
 
-const Home = () => {
+const SubscribesUserPosts = () => {
     const [data, setData] = useState([])
     const {state, dispatch} = useContext(UserContext)
     const [userComment, setComment] = useState('')
 
     useEffect(()=> {
-        fetch('/allpost', {
+        fetch('/getSubpost', {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
             }
         }).then(res=>res.json())
         .then(result=>{
-            console.log(result.posts);
+            // console.log(result);
             setData(result.posts)
         })
     }, [])
@@ -165,4 +165,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default SubscribesUserPosts

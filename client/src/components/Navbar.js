@@ -10,6 +10,7 @@ const Navbar=()=>{
             return (
                 [<li><Link style={{fontSize: 22}} to="/profile">Profile</Link></li>,
                 <li><Link style={{fontSize: 22}} to="/create">Create Post</Link></li>,
+                <li><Link style={{fontSize: 22}} to="/followingpost">My Follow</Link></li>,
                 <li><button onClick={()=>{
                     localStorage.clear()
                     dispatch({"type": "CLEAR"})
