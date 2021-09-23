@@ -8,10 +8,10 @@ const Navbar=()=>{
     const renderList = () =>{
         if(state) {
             return (
-                [<li><Link style={{fontSize: 22}} to="/profile">Profile</Link></li>,
-                <li><Link style={{fontSize: 22}} to="/create">Create Post</Link></li>,
-                <li><Link style={{fontSize: 22}} to="/followingpost">My Follow</Link></li>,
-                <li><button onClick={()=>{
+                [<li key={3}><Link style={{fontSize: 22}} to="/profile">Profile</Link></li>,
+                <li key={4}><Link style={{fontSize: 22}} to="/create">Create Post</Link></li>,
+                <li key={5}><Link style={{fontSize: 22}} to="/followingpost">My Follow</Link></li>,
+                <li key={6}><button onClick={()=>{
                     localStorage.clear()
                     dispatch({"type": "CLEAR"})
                     history.push('/login')
@@ -20,8 +20,8 @@ const Navbar=()=>{
             )
         } else {
             return ([
-                <li><Link style={{fontSize: 22}} to="/login">Login</Link></li>,
-                <li><Link style={{fontSize: 22}} to="/signup">Signup</Link></li>
+                <li key={1}><Link style={{fontSize: 22}} to="/login">Login</Link></li>,
+                <li key={2}><Link style={{fontSize: 22}} to="/signup">Signup</Link></li>
             ])
         }
     }

@@ -126,7 +126,7 @@ const Home = () => {
                                 <Link to={item.postedBy._id !== state._id?`/profile/${item.postedBy._id}`:"/profile"}>{item.postedBy.name}</Link> 
                                 
                                 {/* delete button */}
-                                {item.postedBy._id == state._id && <i style={{cursor: 'pointer', float:"right", marginTop:"5px"}} className="material-icons" onClick={()=>{
+                                {item.postedBy._id === state._id && <i style={{cursor: 'pointer', float:"right", marginTop:"5px"}} className="material-icons" onClick={()=>{
                                     deletePost(item._id)
                                 }}>delete</i>} 
 
