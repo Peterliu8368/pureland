@@ -30,8 +30,6 @@ const Profile = () => {
                 body: data
             }).then(res=>res.json())
             .then(data=>{
-                localStorage.setItem('user', JSON.stringify({...state, pic: data.url}))
-                dispatch({type: "UPDATEPIC", payload:data.url})
                 fetch('/updatepic', {
                     method: "put",
                     headers:{
@@ -43,8 +41,9 @@ const Profile = () => {
                     })
                 }).then(res=>res.json())
                 .then(result=>{
-                    console.log(result);
-                    
+                    console.log(result.result);
+                    localStorage.setItem('user', JSON.stringify({...state, pic: result.result.pic}))
+                    dispatch({type: "UPDATEPIC", payload:result.result.pic})
                 })
             })
             .catch(err=>console.log(err))
