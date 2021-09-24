@@ -55,16 +55,21 @@ a {
   margin-left: 1rem;
   margin-top: 1rem;
 }
-
-.home {
-  
-}
-
 .home-card {
   max-width: 55vw;
   height: max-content;
   margin: 26px auto;
 }
+
+@media screen and (max-width: 600px) {
+  .home-card {
+    max-width: 95vw;
+    height: max-content;
+    margin: 26px auto;
+  }
+}
+
+
 
 #toasts-container {
   top: 2rem !important;
