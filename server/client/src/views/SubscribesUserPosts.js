@@ -71,6 +71,9 @@ const SubscribesUserPosts = () => {
     }
 
     const makeComment = (text, postId) => {
+        if(text.length === 0){
+            return
+        }
         fetch("/comment", {
             method: "put",
             headers: {
