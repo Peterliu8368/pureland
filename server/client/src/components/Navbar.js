@@ -5,6 +5,7 @@ import M from 'materialize-css'
 
 const Navbar=()=>{
     const searchModal = useRef(null)
+    const [userDetails, setUserDetails] = useState([])
     const {state, dispatch} = useContext(UserContext)
     const history = useHistory();
     const [search, setSearch] = useState("")
@@ -35,6 +36,23 @@ const Navbar=()=>{
         }
     }
 
+    const fetchUsers = (query) =>{
+        setSearch(query)
+        fetch("/search-users", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('jwt')
+            },
+            body: JSON.stringify({
+                query
+            })
+        }).then(res=>res.json())
+        .then(result=>{
+            setUserDetails(result.user)
+        }).catch(err=>console.log(err))
+    }
+
     return (
         <nav>
             <div className="nav-wrapper white">
@@ -46,14 +64,26 @@ const Navbar=()=>{
             {/*Modal Structure */}
             <div id="modal1" className="modal" ref={searchModal} style={{overflow: 'auto', maxHeight:"50vh"}}>
                 <div className="modal-content" style={{color:'black'}}>
-                    <input type="text" placeholder="search user name" value={search} onChange={e=>setSearch(e.target.value)}/>
+                    <input type="text" placeholder="search user email" value={search} onChange={e=>fetchUsers(e.target.value)}/>
                     <ul className="collection">
-                        <li className="collection-item">Alvin</li>
+                        {userDetails.map((item, i)=>{
+                            return (
+                                <Link to={item._id === state._id? `/profile` :`/profile/${item._id}`} onClick={()=>{
+                                    M.Modal.getInstance(searchModal.current).close()
+                                    setUserDetails([])
+                                    setSearch('')
+                                }}><li key={i} className="collection-item">{item.name} - {item.email}</li></Link>
+                            )
+                        })}
+                        
                         
                     </ul>
                 </div>
                     <div className="modal-footer">
-                    <button href="#!" className="modal-close waves-effect waves-green btn-flat">Find</button>
+                    <button href="#!" className="modal-close waves-effect waves-green btn-flat" onClick={()=>{
+                        setUserDetails([])
+                        setSearch('')
+                        }}>Close</button>
                 </div>
             </div>
         </nav>
