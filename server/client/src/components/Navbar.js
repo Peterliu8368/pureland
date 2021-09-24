@@ -1,14 +1,23 @@
-import React, { useContext} from "react";
+import React, { useContext, useRef, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../App";
+import M from 'materialize-css'
 
 const Navbar=()=>{
+    const searchModal = useRef(null)
     const {state, dispatch} = useContext(UserContext)
     const history = useHistory();
+    const [search, setSearch] = useState("")
+
+    useEffect(()=>{
+        M.Modal.init(searchModal.current)
+    }, [])
+
     const renderList = () =>{
         if(state) {
             return (
-                [<li key={3}><Link style={{fontSize: 22}} to="/profile">Profile</Link></li>,
+                [<li key={7}><i data-target="modal1" style={{cursor: 'pointer', color: "black", marginTop: 3}} className="large material-icons modal-trigger">search</i></li>,
+                <li key={3}><Link style={{fontSize: 22}} to="/profile">Profile</Link></li>,
                 <li key={4}><Link style={{fontSize: 22}} to="/create">Create Post</Link></li>,
                 <li key={5}><Link style={{fontSize: 22}} to="/followingpost">My Follow</Link></li>,
                 <li key={6}><button onClick={()=>{
@@ -33,6 +42,19 @@ const Navbar=()=>{
                 <ul style={{marginRight:"2rem"}} id="nav-mobile" className="right">
                     {renderList()}
                 </ul>
+            </div>
+            {/*Modal Structure */}
+            <div id="modal1" className="modal" ref={searchModal} style={{overflow: 'auto', maxHeight:"50vh"}}>
+                <div className="modal-content" style={{color:'black'}}>
+                    <input type="text" placeholder="search user name" value={search} onChange={e=>setSearch(e.target.value)}/>
+                    <ul className="collection">
+                        <li className="collection-item">Alvin</li>
+                        
+                    </ul>
+                </div>
+                    <div className="modal-footer">
+                    <button href="#!" className="modal-close waves-effect waves-green btn-flat">Find</button>
+                </div>
             </div>
         </nav>
     )

@@ -25,6 +25,6 @@ const postSchema = new mongoose.Schema({
         ref: "User",
         required: [true, "{PATH} is required"]
     }
-})
+}, {timestamps: true})
 
 mongoose.model("Post", postSchema)

@@ -14,7 +14,8 @@ a {
   vertical-align: middle;
 }
 
-li {
+.collection-item {
+  float: none !important;
   font-size: larger;
 }
 
