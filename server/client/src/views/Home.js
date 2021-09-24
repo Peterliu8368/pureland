@@ -71,6 +71,7 @@ const Home = () => {
     }
 
     const makeComment = (text, postId) => {
+        console.log(text.length);
         if(text.length === 0){
             return
         }
