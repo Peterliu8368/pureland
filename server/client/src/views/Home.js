@@ -156,7 +156,7 @@ const Home = () => {
                                 {
                                     item.comments.map((record, i)=>{
                                         return (
-                                            <h6 key={record._id}><span style={{fontWeight: "bold"}}>{record.postedBy.name} </span> {record.text}</h6>
+                                            <h6 key={record._id}><Link to={record.postedBy._id !== state._id?`/profile/${record.postedBy._id}`:"/profile"} style={{fontWeight: "bold"}}>{record.postedBy.name} </Link> {record.text}</h6>
                                         )
                                     })
                                 }
