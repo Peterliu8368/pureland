@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose')
 const User = mongoose.model("User")
 const bcrypt = require('bcryptjs')
+const crypto = require('crypto')
 const jwt = require('jsonwebtoken');
 const {JWT_SECRET} = require('../config/keys')
 const requireLogin = require('../middleware/requireLogin')
@@ -68,6 +69,55 @@ router.post('/signin', (req, res)=>{
                 .catch(err=>console.log(err))
         })
         .catch(err=>console.log(err))
+})
+
+router.post('/reset-password', (req, res)=>{
+    crypto.randomBytes(32, (err, buffer)=>{
+        if(err){
+            console.log(err)
+        }
+        const token = buffer.toString("hex")
+        User.findOne({email: req.body.email})
+        .then(user=>{
+            if(!user){
+                return res.status(422).json({error: "User do not exist"})
+            }
+            user.resetToken = token
+            user.expireToken = Date.now() + 1800000
+            user.save().then((result)=>{
+                transporter.sendMail({
+                    to: user.email,
+                    from: "peterliu2357@gmail.com",
+                    subject: "Password Reset",
+                    html: `
+                    <p>You have requested password reset</p>
+                    <h5>Click on this <a href="http://localhost:3000/reset/${token}">link</a> to reset password</h5>
+                    `
+                }).then(result=>console.log(result)).catch(err=>console.log(err))
+                res.json({message: "Check your email for reset link"})
+            })
+        })
+    })
+})
+
+router.post('/new-password', (req, res)=>{
+    const newPassword = req.body.password
+    const sentToken = req.body.token
+    User.findOne({resetToken: sentToken, expireToken:{$gt: Date.now()}})
+    .then(user=>{
+        if(!user){
+            return res.status(422).json({error:"Try again session expired"})
+        }
+        bcrypt.hash(newPassword, 12)
+        .then(hashedPassword=>{
+            user.password = hashedPassword
+            user.resetToken = undefined
+            user.expireToken = undefined
+            user.save().then(savedUser=>{
+                res.json({message: "Password update success"})
+            }).catch(err=>console.log(err))
+        })
+    })
 })
 
 module.exports = router;

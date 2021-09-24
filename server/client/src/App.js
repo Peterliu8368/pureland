@@ -10,6 +10,8 @@ import {useEffect, createContext, useReducer, useContext} from 'react'
 import {reducer, initialState} from './reducers/userReducer'
 import UserProfile from "./views/UserProfile"
 import SubscribesUserPosts from "./views/SubscribesUserPosts"
+import Reset from "./views/Reset"
+import Newpassword from "./views/Newpassword"
 
 export const UserContext = createContext()
 
@@ -22,7 +24,9 @@ const Routing = () => {
     if (user) {
       dispatch({type: "USER", payload: user})
     } else {
-      history.push('/login')
+      if(!history.location.pathname.startsWith('/reset')){
+        history.push('/login')
+      }
     }
   }, [])
 
@@ -54,6 +58,14 @@ const Routing = () => {
 
         <Route exact path='/followingpost'>
           <SubscribesUserPosts />
+        </Route>
+
+        <Route exact path='/reset/:token'>
+          <Newpassword />
+        </Route>
+
+        <Route exact path='/reset'>
+          <Reset />
         </Route>
       </Switch>
   )

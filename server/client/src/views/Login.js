@@ -51,6 +51,9 @@ const Login = () => {
                 <button onClick={loginHandler} style={{marginTop:"2rem"}} className="btn waves-effect waves-light #26a69a teal lighten-1" type="submit">Login
                 </button>
                 <p>
+                    <Link style={{fontFamily: 'roboto', textDecoration:"underline"}} to="/reset">Forget your password?</Link>
+                </p>
+                <p>
                     <Link style={{fontFamily: 'roboto', textDecoration:"underline"}} to="/signin">Start your journey here</Link>
                 </p>
             </div>
