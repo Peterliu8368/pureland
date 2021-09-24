@@ -80,9 +80,9 @@ const Signup = () => {
         <div className="mycard">
             <div className="card auth-card">
                 <h5>Stay Focused</h5>
-                <input type="text" placeholder="name" value={name} onChange={e=>setName(e.target.value)}/>
-                <input type="text" placeholder="email" value={email} onChange={e=>setEmail(e.target.value)}/>
-                <input type="password" placeholder="password" value={password} onChange={e=>setPassword(e.target.value)}/>
+                <input type="text" placeholder="Please enter full real name (e.g. John Doe)" value={name} onChange={e=>setName(e.target.value)}/>
+                <input type="text" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)}/>
+                <input type="password" placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)}/>
                 <div className="file-field input-field">
                     <div className="btn">
                         <span>Profile Pic</span>
