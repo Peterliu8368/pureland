@@ -55,17 +55,50 @@ a {
   margin-left: 1rem;
   margin-top: 1rem;
 }
+
+.profile-div{
+  max-width: 69vw;
+  margin: 0 auto;
+}
+
 .home-card {
   max-width: 55vw;
   height: max-content;
   margin: 26px auto;
 }
+@media screen and (max-width: 1000px) {
+  .hide-when-mobile{
+    display: none !important;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .home-card {
+    max-width: 75vw;
+    height: max-content;
+    margin: 26px auto;
+  }
+  .item{
+    width: 45%;
+  }
+  .profile-div{
+    max-width: 85vw;
+    margin: 0 auto;
+  }
+}
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .home-card {
     max-width: 95vw;
     height: max-content;
     margin: 26px auto;
+  }
+  .profile-div{
+    max-width: 95vw;
+    margin: 0 auto;
+  }
+  .item{
+    width: 90%;
+    margin: 2rem;
   }
 }
 

@@ -55,7 +55,7 @@ const Profile = () => {
     }
 
     return (
-        <div style={{maxWidth:"69vw", margin: "0 auto"}}>
+        <div className="profile-div">
             <div style={{
                 display: 'flex',
                 justifyContent: 'space-around',

@@ -78,7 +78,7 @@ const Profile = () => {
 
     return (
         <>
-            {userProfile? <div style={{maxWidth:"69vw", margin: "0 auto"}}>
+            {userProfile? <div className="profile-div">
                 <div style={{
                     display: 'flex',
                     justifyContent: 'space-around',
