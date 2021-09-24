@@ -17,9 +17,9 @@ const Login = () => {
             return M.toast({html: "Password must have more than 8 characters", classes:"#b71c1c red darken-4"})
         }
         fetch("/signin", {
-            method: "post",
+            method: 'post',
             headers: {
-                "Content-Type": "Application/json"
+                "Content-Type": "application/json"
             },
             body:JSON.stringify({
                 email,
@@ -39,7 +39,7 @@ const Login = () => {
                 history.push('/')
             }
         })
-        .catch(err=>console.log(err))
+        .catch(err=>console.log("signin route error",err))
     }
 
     return (
