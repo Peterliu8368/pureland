@@ -54,7 +54,7 @@ const Login = () => {
                     <Link style={{fontFamily: 'roboto', textDecoration:"underline"}} to="/reset">Forget your password?</Link>
                 </p>
                 <p>
-                    <Link style={{fontFamily: 'roboto', textDecoration:"underline"}} to="/signin">Start your journey here</Link>
+                    <Link style={{fontFamily: 'roboto', textDecoration:"underline"}} to="/login">Start your journey here</Link>
                 </p>
             </div>
         </div>
